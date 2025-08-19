@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EOPA Conference 2025 - Services & Registration</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #006994;
+            --secondary: #008080;
+            --accent: #00b4d8;
+            --light: #f0f8ff;
+            --dark: #003153;
+            --text: #333333;
+            --success: #28a745;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            line-height: 1.6;
+            color: var(--text);
+            background: linear-gradient(135deg, #f0f8ff 0%, #e6f2ff 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 50px;
+            margin-right: 10px;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        /* Funnel Progress Bar */
+        .funnel-progress {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 2rem auto;
+            max-width: 800px;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--accent);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 5px;
+        }
+        
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+        }
+        
+        .step {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            width: 30%;
+        }
+        
+        .step-number {
+            width: 30px;
+            height: 30px;
+            background: #e9ecef;
+            color: var(--text);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.5rem;
+            font-weight: bold;
+        }
+        
+        .step.active .step-number {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .step.completed .step-number {
+            background: var(--success);
+            color: white;
+        }
+        
+        .step-text {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        
+        .step.active .step-text {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        /* Funnel Steps */
+        .funnel-step {
+            display: none;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .funnel-step.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .step-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary);
+        }
+        
+        .step-title h2 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .step-title p {
+            color: #6c757d;
+            font-size: 1.1rem;
+        }
+        
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .service-card {
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border-color: var(--accent);
+        }
+        
+        .service-card.selected {
+            border-color: var(--accent);
+            background: var(--light);
+        }
+        
+        .service-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        .service-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .service-price {
+            font-weight: bold;
+            color: var(--secondary);
+            margin: 0.5rem 0;
+            font-size: 1.2rem;
+        }
+        
+        .service-features {
+            list-style: none;
+            margin: 1rem 0;
+        }
+        
+        .service-features li {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .service-features li i {
+            color: var(--success);
+            margin-right: 0.5rem;
+        }
+        
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(0, 180, 216, 0.1);
+        }
+        
+        /* Navigation Buttons */
+        .btn-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: #0096c7;
+            transform: translateY(-2px);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+        }
+        
+        .btn-outline:hover {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .btn-success {
+            background: var(--success);
+        }
+        
+        .btn-success:hover {
+            background: #218838;
+        }
+        
+        /* Summary Section */
+        .summary-container {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+        
+        /* Confirmation Step */
+        .confirmation {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .confirmation i {
+            font-size: 4rem;
+            color: var(--success);
+            margin-bottom: 1rem;
+        }
+        
+        .confirmation h2 {
+            color: var(--success);
+            margin-bottom: 1rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .btn-nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCIgdmlld0JveD0iMCAwIDUwIDUwIj48Y2lyY2xlIGN4PSIyNSIgY3k9IjI1IiByPSIyMyIgZmlsbD0iIzAwNjk5NCIvPjxwYXRoIGQ9Ik0yNSAxMGM1IDAgMTAgMyAxMiA3IDIgNSA0IDEwIDMgMTYtMSA1LTQgOS05IDExLTQgMi05IDMtMTMgMi01LTEtMTAtNC0xMy05LTMtNS00LTEwLTMtMTUgMS00IDQtOCA5LTExeiIgZmlsbD0iIzAwYjRkOCIvPjxjaXJjbGUgY3g9IjI1IiBjeT0iMTgiIHI9IjQiIGZpbGw9IiNmMGY4ZmYiLz48L3N2Zz4=" alt="EOPA Logo">
+                EOPA <span>Ocean</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Funnel Progress Bar -->
+        <div class="funnel-progress">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="progress-steps">
+                <div class="step completed" id="step1-indicator">
+                    <div class="step-number">1</div>
+                    <div class="step-text">Services</div>
+                </div>
+                <div class="step active" id="step2-indicator">
+                    <div class="step-number">2</div>
+                    <div class="step-text">Details</div>
+                </div>
+                <div class="step" id="step3-indicator">
+                    <div class="step-number">3</div>
+                    <div class="step-text">Confirm</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 1: Service Selection -->
+        <div class="funnel-step active" id="step1">
+            <div class="step-title">
+                <h2>Select Conference Services</h2>
+                <p>Choose the services that best fit your needs</p>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card" data-service="basic">
+                    <div class="service-icon">
+                        <i class="fas fa-satellite-dish"></i>
+                    </div>
+                    <h3>Basic Conference Access</h3>
+                    <div class="service-price">€199</div>
+                    <p>Essential access to all conference sessions and basic materials.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Full conference access (3 days)</li>
+                        <li><i class="fas fa-check"></i> Digital conference materials</li>
+                        <li><i class="fas fa-check"></i> Networking opportunities</li>
+                        <li><i class="fas fa-check"></i> Lunch & refreshments</li>
+                    </ul>
+                    <button class="btn btn-outline select-service">Select Plan</button>
+                </div>
+
+                <div class="service-card" data-service="professional">
+                    <div class="service-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>Professional Package</h3>
+                    <div class="service-price">€349</div>
+                    <p>Enhanced experience with workshop access and premium materials.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Everything in Basic</li>
+                        <li><i class="fas fa-check"></i> 2 technical workshops</li>
+                        <li><i class="fas fa-check"></i> Printed conference materials</li>
+                        <li><i class="fas fa-check"></i> Exclusive networking event</li>
+                        <li><i class="fas fa-check"></i> Certificate of participation</li>
+                    </ul>
+                    <button class="btn btn-outline select-service">Select Plan</button>
+                </div>
+
+                <div class="service-card" data-service="premium">
+                    <div class="service-icon">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <h3>Premium Experience</h3>
+                    <div class="service-price">€599</div>
+                    <p>Complete conference experience with all exclusive benefits.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Everything in Professional</li>
+                        <li><i class="fas fa-check"></i> All workshops (5 total)</li>
+                        <li><i class="fas fa-check"></i> One-on-one with speakers</li>
+                        <li><i class="fas fa-check"></i> Premium conference kit</li>
+                        <li><i class="fas fa-check"></i> Gala dinner attendance</li>
+                        <li><i class="fas fa-check"></i> Post-conference resources</li>
+                    </ul>
+                    <button class="btn btn-outline select-service">Select Plan</button>
+                </div>
+            </div>
+
+            <div class="btn-nav">
+                <div></div> <!-- Empty div for spacing -->
+                <button class="btn" id="step1-next">Continue to Registration</button>
+            </div>
+        </div>
+
+        <!-- Step 2: Registration Form -->
+        <div class="funnel-step" id="step2">
+            <div class="step-title">
+                <h2>Registration Details</h2>
+                <p>Please provide your information to complete registration</p>
+            </div>
+
+            <form id="registration-form">
+                <div class="form-group">
+                    <label for="name">Full Name *</label>
+                    <input type="text" id="name" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="organization">Organization *</label>
+                    <input type="text" id="organization" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="position">Position/Role *</label>
+                    <input type="text" id="position" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="comments">Special Requirements or Questions</label>
+                    <textarea id="comments" class="form-control" rows="3"></textarea>
+                </div>
+
+                <div class="summary-container">
+                    <h3>Order Summary</h3>
+                    <div class="summary-item">
+                        <span id="summary-service">Professional Package</span>
+                        <span id="summary-price">€349</span>
+                    </div>
+                    <div class="summary-total">
+                        <span>Total</span>
+                        <span id="summary-total">€349</span>
+                    </div>
+                </div>
+
+                <div class="btn-nav">
+                    <button type="button" class="btn btn-outline" id="step2-back">Back</button>
+                    <button type="submit" class="btn btn-success">Complete Registration</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Step 3: Confirmation -->
+        <div class="funnel-step" id="step3">
+            <div class="confirmation">
+                <i class="fas fa-check-circle"></i>
+                <h2>Registration Successful!</h2>
+                <p>Thank you for registering for the EOPA Ocean Conference 2025.</p>
+                <p>A confirmation email has been sent to <span id="confirm-email">your@email.com</span> with details about your registration.</p>
+                <div class="summary-container">
+                    <h3>Your Registration Details</h3>
+                    <div class="summary-item">
+                        <span>Name:</span>
+                        <span id="confirm-name">John Doe</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Package:</span>
+                        <span id="confirm-package">Professional Package</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Total:</span>
+                        <span id="confirm-price">€349</span>
+                    </div>
+                </div>
+                <p>We look forward to seeing you at the conference!</p>
+                <a href="https://bocher-de.github.io/EOPA-Conference-2025/" class="btn" style="margin-top: 1rem;">Return to Conference Page</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elements
+            const progressFill = document.getElementById('progress-fill');
+            const step1Indicator = document.getElementById('step1-indicator');
+            const step2Indicator = document.getElementById('step2-indicator');
+            const step3Indicator = document.getElementById('step3-indicator');
+            
+            const step1 = document.getElementById('step1');
+            const step2 = document.getElementById('step2');
+            const step3 = document.getElementById('step3');
+            
+            const step1Next = document.getElementById('step1-next');
+            const step2Back = document.getElementById('step2-back');
+            const registrationForm = document.getElementById('registration-form');
+            
+            const serviceCards = document.querySelectorAll('.service-card');
+            const selectButtons = document.querySelectorAll('.select-service');
+            
+            const summaryService = document.getElementById('summary-service');
+            const summaryPrice = document.getElementById('summary-price');
+            const summaryTotal = document.getElementById('summary-total');
+            
+            const confirmEmail = document.getElementById('confirm-email');
+            const confirmName = document.getElementById('confirm-name');
+            const confirmPackage = document.getElementById('confirm-package');
+            const confirmPrice = document.getElementById('confirm-price');
+            
+            // Selected service
+            let selectedService = {
+                name: 'Professional Package',
+                price: 349
+            };
+            
+            // Service selection
+            serviceCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    serviceCards.forEach(c => c.classList.remove('selected'));
+                    card.classList.add('selected');
+                    
+                    // Update selected service based on data attribute
+                    const serviceType = card.getAttribute('data-service');
+                    if (serviceType === 'basic') {
+                        selectedService = {
+                            name: 'Basic Conference Access',
+                            price: 199
+                        };
+                    } else if (serviceType === 'professional') {
+                        selectedService = {
+                            name: 'Professional Package',
+                            price: 349
+                        };
+                    } else if (serviceType === 'premium') {
+                        selectedService = {
+                            name: 'Premium Experience',
+                            price: 599
+                        };
+                    }
+                    
+                    updateSummary();
+                });
+            });
+            
+            // Select buttons
+            selectButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const card = button.closest('.service-card');
+                    card.click();
+                    goToStep(2);
+                });
+            });
+            
+            // Update summary function
+            function updateSummary() {
+                summaryService.textContent = selectedService.name;
+                summaryPrice.textContent = `€${selectedService.price}`;
+                summaryTotal.textContent = `€${selectedService.price}`;
+            }
+            
+            // Navigation functions
+            function goToStep(step) {
+                // Hide all steps
+                step1.classList.remove('active');
+                step2.classList.remove('active');
+                step3.classList.remove('active');
+                
+                // Show current step
+                document.getElementById(`step${step}`).classList.add('active');
+                
+                // Update progress bar
+                progressFill.style.width = `${(step-1) * 50}%`;
+                
+                // Update step indicators
+                step1Indicator.classList.remove('active', 'completed');
+                step2Indicator.classList.remove('active', 'completed');
+                step3Indicator.classList.remove('active', 'completed');
+                
+                if (step === 1) {
+                    step1Indicator.classList.add('active');
+                } else if (step === 2) {
+                    step1Indicator.classList.add('completed');
+                    step2Indicator.classList.add('active');
+                } else if (step === 3) {
+                    step1Indicator.classList.add('completed');
+                    step2Indicator.classList.add('completed');
+                    step3Indicator.classList.add('active');
+                    
+                    // Update confirmation details
+                    confirmEmail.textContent = document.getElementById('email').value;
+                    confirmName.textContent = document.getElementById('name').value;
+                    confirmPackage.textContent = selectedService.name;
+                    confirmPrice.textContent = `€${selectedService.price}`;
+                }
+            }
+            
+            // Event listeners
+            step1Next.addEventListener('click', () => goToStep(2));
+            step2Back.addEventListener('click', () => goToStep(1));
+            
+            registrationForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                // Basic validation
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const organization = document.getElementById('organization').value;
+                const position = document.getElementById('position').value;
+                
+                if (name && email && organization && position) {
+                    // In a real application, you would submit the form data to a server here
+                    goToStep(3);
+                } else {
+                    alert('Please fill in all required fields');
+                }
+            });
+            
+            // Initialize summary
+            updateSummary();
+        });
+    </script>
+</body>
+</html>
